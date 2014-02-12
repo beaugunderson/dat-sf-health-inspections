@@ -1,0 +1,31 @@
+{
+  "name": "dat-sf-health-inspections",
+  "version": "0.0.0",
+  "description": "Health inspection data for restaurants in San Francisco",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beaugunderson/dat-sf-health-inspections.git"
+  },
+  "keywords": [
+    "dat",
+    "data",
+    "sf",
+    "san-francisco",
+    "health",
+    "health-inspection",
+    "restaurant"
+  ],
+  "author": "Beau Gunderson <beau@beaugunderson.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/beaugunderson/dat-sf-health-inspections/issues"
+  },
+  "dependencies": {
+    "request": "~2.33.0",
+    "dat": "~2.8.1"
+  }
+}
