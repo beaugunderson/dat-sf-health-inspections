@@ -6,6 +6,8 @@ var PORT = process.env.PORT || 8080;
 
 var dat;
 
+// Also: https://extxfer.sfdph.org/food/SFFoodProgram_Complete_Data.zip
+
 function fetch() {
   console.log('Fetching...');
   console.log(JSON.stringify({ 'started': new Date() }));
@@ -13,25 +15,25 @@ function fetch() {
   request.get('https://extxfer.sfdph.org/food/SFBusinesses.zip')
     .pipe(unzip.Parse())
     .on('entry', function (entry) {
-      if (entry.path === 'inspections.csv') {
-        var writeStream = dat.createWriteStream({
-          csv: true,
-          primary: ['business_id', 'date'],
-          hash: true
-        });
-
-        entry.pipe(writeStream);
-
-        writeStream.on('error', function (err) {
-          console.error('Error', err);
-        });
-
-        writeStream.on('close', function () {
-          console.log(JSON.stringify({ 'finished': new Date() }));
-        });
-      } else {
-        entry.autodrain();
+      if (entry.path !== 'inspections.csv') {
+        return entry.autodrain();
       }
+
+      var writeStream = dat.createWriteStream({
+        csv: true,
+        primary: ['business_id', 'date'],
+        hash: true
+      });
+
+      entry.pipe(writeStream);
+
+      writeStream.on('error', function (err) {
+        console.error('Error', err);
+      });
+
+      writeStream.on('close', function () {
+        console.log(JSON.stringify({ 'finished': new Date() }));
+      });
     });
 }
 
